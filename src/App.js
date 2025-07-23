@@ -7,10 +7,14 @@ import { useEffect, useState } from 'react';
 import Todo from './Todo';
 
 function App() {
-  const [todo, setTodo] = useState([
-    {id:1, title:'Learn web', checked:true},
-    {id:2, title:'Get a job', checked:false}
-  ]);
+  const [todo, setTodo] = useState(()=>{
+    const todoStringFromStorage = window.localStorage.getItem('todo');
+    return todoStringFromStorage ? JSON.parse(todoStringFromStorage) :  [
+      {id:1, title:'Learn web', checked:true},
+      {id:2, title:'Get a job', checked:false}
+    ]
+  ;
+  });
   const checkUpdate = (id, value)=>{
     let newtodos = todo.map(item=>{
       return item.id === id ?  {...item, checked:value} : item
